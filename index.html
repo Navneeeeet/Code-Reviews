@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Course Galaxy - Home</title>
+  <link rel="stylesheet" href="home.css"> <!-- Optional external CSS -->
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    nav {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .hero {
+      padding-top: 100px;
+    }
+
+    .cta-button {
+      background: #00bcd4;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      text-decoration: none;
+    }
+
+    .steps, .category-cards, .review-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+      color: antiquewhite;
+    }
+
+    .step, .category-cards a, .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      width: 200px;
+    }
+
+    .card {
+      text-align: left;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Starfield Background -->
+  <canvas id="starfield"></canvas>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="Your_Reviews.html">Your Reviews</a>
+    <a href="contact.html">Contact Us</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to Course Galaxy 🚀</h1>
+    <p>Your AI-powered platform to review, compare, and explore the best online courses.</p>
+    <a href="courses.html" class="cta-button">Explore Courses</a>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">1️⃣ Enter Course Details</div>
+      <div class="step">2️⃣ Get AI-Generated Reviews</div>
+      <div class="step">3️⃣ Compare & Choose the Best</div>
+    </div>
+  </section>
+
+  <!-- Popular Categories -->
+  <section class="categories">
+    <h2>Popular Domains</h2>
+    <div class="category-cards">
+      <a href="courses.html?domain=IT-ITeS">💻 IT-ITeS</a>
+      <a href="courses.html?domain=BFSI">🏦 BFSI</a>
+      <a href="courses.html?domain=Agriculture">🌾 Agriculture</a>
+    </div>
+  </section>
+
+  <!-- Recent Reviews -->
+  <section class="recent-reviews">
+    <h2>Latest Reviews</h2>
+    <div class="review-cards">
+      <div class="card">
+        <h3>Python for Data Science</h3>
+        <p>⭐⭐⭐⭐☆</p>
+        <p>“Very beginner-friendly and structured well. Great for hands-on learners!”</p>
+      </div>
+      <div class="card">
+        <h3>Machine Learning Basics</h3>
+        <p>⭐⭐⭐⭐⭐</p>
+        <p>“Excellent explanations, real-world examples, and quizzes helped a lot.”</p>
+      </div>
+      <div class="card">
+        <h3>Cloud Fundamentals (AWS)</h3>
+        <p>⭐⭐⭐☆☆</p>
+        <p>“Good overview, but lacked depth in advanced topics.”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="call-to-action">
+    <h2>Want to Share Your Learning Experience?</h2>
+    <a href="Your_Reviews.html" class="cta-button">Submit a Review</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2023 Course Galaxy. All rights reserved. <br>
+    Last updated: July 2025
+  </footer>
+
+  <!-- Starfield Script -->
+  <script>
+    const canvas = document.getElementById("starfield");
+    const ctx = canvas.getContext("2d");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const stars = [];
+    const numStars = 300;
+
+    function createStars() {
+      stars.length = 0;
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          z: Math.random() * width
+        });
+      }
+    }
+
+    function animateStars() {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, width, height);
+
+      for (let i = 0; i < numStars; i++) {
+        let star = stars[i];
+        star.z -= 2;
+
+        if (star.z <= 0) {
+          star.z = width;
+          star.x = Math.random() * width;
+          star.y = Math.random() * height;
+        }
+
+        const k = 128.0 / star.z;
+        const sx = (star.x - width / 2) * k + width / 2;
+        const sy = (star.y - height / 2) * k + height / 2;
+
+        if (sx >= 0 && sx < width && sy >= 0 && sy < height) {
+          const size = (1 - star.z / width) * 2;
+          ctx.beginPath();
+          ctx.arc(sx, sy, size, 0, Math.PI * 2);
+          ctx.fillStyle = "white";
+          ctx.fill();
+        }
+      }
+
+      requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener("resize", () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      createStars();
+    });
+
+    createStars();
+    animateStars();
+  </script>
+</body>
+</html>

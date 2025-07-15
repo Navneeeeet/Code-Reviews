@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Course Reviews</title>
+  <link rel="stylesheet" href="your_reviews.css">
+
+  <style>
+    /* Starfield Canvas */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Starfield Background -->
+  <canvas id="starfield" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
+
+  <!-- Page Content -->
+  <div class="logo">Your Course Reviews</div>
+
+  <nav id="navbar">
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="Your_Reviews.html">Your Reviews</a>
+    <a href="contact.html">Contact Us</a>
+  </nav>
+
+  <div class="form-container">
+    <form>
+      <label for="courseName">Course Name</label>
+      <input type="text" id="courseName" name="courseName" required>
+
+      <label for="instructorName">Instructor Name</label>
+      <input type="text" id="instructorName" name="instructorName" required>
+
+      <label for="organizationName">Organization Name</label>
+      <input type="text" id="organizationName" name="organizationName" required>
+
+      <label for="review">Your Review</label>
+      <textarea id="review" name="review" rows="4" required></textarea>
+
+      <label>Duration:<br> 
+        <input type="text" name="duration" placeholder="e.g., 6 Months" required />
+      </label>
+
+      <label>Course URL:<br> 
+        <input type="url" name="url" placeholder="https://..." required />
+      </label>
+
+      <label for="imageUpload">Upload an Image</label>
+      <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+
+      <label for="rating">Rating</label>
+      <select id="rating" name="rating" required>
+        <option value="">--Select Rating--</option>
+        <option value="1">1 Star</option>
+        <option value="2">2 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="5">5 Stars</option>
+      </select>
+
+      <input type="submit" value="Submit Review">
+    </form>
+  </div>
+
+  <footer>
+    © 2023 Course Review. All rights reserved.<br/>
+    Last updated: October 2023
+  </footer>
+
+  <!-- Starfield Script -->
+  <script>
+    const canvas = document.getElementById("starfield");
+    const ctx = canvas.getContext("2d");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+    
+    const stars = [];
+    const numStars = 300;
+    
+    function createStars() {
+      stars.length = 0;
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          z: Math.random() * width
+        });
+      }
+    }
+    
+    function animateStars() {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, width, height);
+      
+      for (let i = 0; i < numStars; i++) {
+        let star = stars[i];
+        star.z -= 2;
+        
+        if (star.z <= 0) {
+          star.z = width;
+          star.x = Math.random() * width;
+          star.y = Math.random() * height;
+        }
+        
+        const k = 128.0 / star.z;
+        const sx = (star.x - width / 2) * k + width / 2;
+        const sy = (star.y - height / 2) * k + height / 2;
+        
+        if (sx >= 0 && sx < width && sy >= 0 && sy < height) {
+          const size = (1 - star.z / width) * 2;
+          ctx.beginPath();
+          ctx.arc(sx, sy, size, 0, Math.PI * 2);
+          ctx.fillStyle = "white";
+          ctx.fill();
+        }
+      }
+      
+      requestAnimationFrame(animateStars);
+    }
+    
+    window.addEventListener("resize", () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      createStars();
+    });
+    
+    createStars();
+    animateStars();
+  </script>
+
+  <script src="your_reviews.js"></script>
+</body>
+</html>

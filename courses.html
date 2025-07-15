@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Course List</title>
+  <link rel="stylesheet" href="courses.css">
+
+  <style>
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Starfield Background -->
+  <canvas id="starfield" style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
+
+  <nav id="navbar">
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="Your_Reviews.html">Your Reviews</a>
+    <a href="contact.html">Contact Us</a>
+  </nav>
+
+  <section class="form-section">
+    <h2>AI Course Review Generator</h2>
+    <form id="reviewForm">
+      <label>Course Name:<br> <input type="text" name="title" required /></label><br><br>
+      <label>Organization:<br> <input type="text" name="org" required /></label><br><br>
+      <label>Domain:<br> 
+        <select name="sector" required>
+          <option value="IT-ITeS">IT-ITeS</option>
+          <option value="BFSI">BFSI</option>
+          <option value="Agriculture">Agriculture</option>
+        </select>
+      </label><br><br>
+      <label>Duration:<br> <input type="text" name="duration" placeholder="e.g., 6 Months" required /></label><br><br>
+      <label>Course URL:<br> <input type="url" name="url" placeholder="https://..." required /></label><br><br>
+      <button type="submit">Generate Review ➜</button>
+    </form>
+    <div id="generatedReview"></div>
+  </section>
+
+  <div class="card-container" id="card-container"></div>
+
+  <table id="compare-table">
+    <thead>
+      <tr>
+        <th>Course Title</th>
+        <th>Organization</th>
+        <th>Duration</th>
+        <th>Language</th>
+        <th>Sector</th>
+        <th>Amount</th>
+        <th>Rating</th>
+        <th>Number of Enrolled</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- Starfield Script -->
+  <script>
+    const canvas = document.getElementById("starfield");
+    const ctx = canvas.getContext("2d");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+    
+    const stars = [];
+    const numStars = 300;
+    
+    function createStars() {
+      stars.length = 0;
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          z: Math.random() * width
+        });
+      }
+    }
+    
+    function animateStars() {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, width, height);
+      
+      for (let i = 0; i < numStars; i++) {
+        let star = stars[i];
+        star.z -= 2;
+        
+        if (star.z <= 0) {
+          star.z = width;
+          star.x = Math.random() * width;
+          star.y = Math.random() * height;
+        }
+        
+        const k = 128.0 / star.z;
+        const sx = (star.x - width / 2) * k + width / 2;
+        const sy = (star.y - height / 2) * k + height / 2;
+        
+        if (sx >= 0 && sx < width && sy >= 0 && sy < height) {
+          const size = (1 - star.z / width) * 2;
+          ctx.beginPath();
+          ctx.arc(sx, sy, size, 0, Math.PI * 2);
+          ctx.fillStyle = "white";
+          ctx.fill();
+        }
+      }
+      
+      requestAnimationFrame(animateStars);
+    }
+    
+    window.addEventListener("resize", () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      createStars();
+    });
+    
+    createStars();
+    animateStars();
+  </script>
+
+  <script src="courses.js"></script>
+</body>
+</html>

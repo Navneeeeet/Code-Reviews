@@ -1,0 +1,81 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #ba8484;
+  padding: 20px;
+}
+
+#navbar {
+  background-color: #333;
+  overflow: hidden;
+  padding: 10px 0;
+  margin-bottom: 30px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+#navbar a {
+  color: white;
+  padding: 14px 20px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+#navbar a:hover {
+  background-color: #575757;
+  border-radius: 5px;
+}
+
+.contact-container {
+  max-width: 600px;
+  margin: 30px auto;
+  background-color: #fff8dc;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.contact-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.contact-container label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.contact-container input[type="text"],
+.contact-container input[type="email"],
+.contact-container textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.contact-container textarea {
+  resize: vertical;
+}
+
+.contact-container button {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.contact-container button:hover {
+  background-color: #444;
+}
